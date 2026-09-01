@@ -1,0 +1,4 @@
+-keep class android.webkit.** { *; }
+-keep class android.os.** { *; }
+-keepattributes SourceFile,LineNumberTable
+-keep public class * extends android.app.Activity
