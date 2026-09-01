@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Candle AI</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#070b12;color:#f5f7fa;font-family:Arial,sans-serif}
+header{padding:18px 20px;border-bottom:1px solid #243042;font-size:22px;font-weight:800}
+header span{color:#00d084}.wrap{max-width:650px;margin:auto;padding:25px 16px}
+.hero{text-align:center;margin-bottom:22px}.hero h1{font-size:30px}.hero p{color:#8994a5}
+.card{background:#101722;border:1px solid #243042;border-radius:18px;padding:20px;margin-bottom:16px}
+.upload{height:210px;border:2px dashed #243042;border-radius:14px;display:flex;align-items:center;justify-content:center;text-align:center;cursor:pointer}
+.upload b{font-size:40px;display:block}.upload p{color:#8994a5}
+#preview{max-width:100%;max-height:300px;display:none}.tf{margin-top:18px}
+button{border:0;border-radius:10px;padding:13px 17px;background:#151e2b;color:#fff;margin:5px;cursor:pointer}
+.active,.analyze{background:#00d084;color:#001b11;font-weight:800}.analyze{width:100%;margin:15px 0 0}
+.result{text-align:center}.signal{font-size:44px;font-weight:900;margin:15px}.up{color:#00d084}.down{color:#ff4d67}.wait{color:#ffc857}
+.bar{height:8px;background:#202b3b;border-radius:20px;overflow:hidden}.bar i{display:block;height:100%;background:#00d084;width:0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}.grid div{background:#151e2b;padding:14px;border-radius:10px;text-align:left}.grid small{display:block;color:#8994a5;margin-bottom:6px}
+.note{color:#8994a5;font-size:12px;text-align:center;line-height:1.5}
+</style>
+</head>
+<body>
+<header>🧠 Candle<span>AI</span></header>
+<div class="wrap">
+<section class="hero"><h1>AI Candle Analyzer</h1><p>Analyze a candle screenshot with an AI-style demo analyzer.</p></section>
+<section class="card">
+<label class="upload" for="file"><div id="u"><b>📷</b><strong>Upload Candle Screenshot</strong><p>PNG / JPG / WEBP</p></div><img id="preview"></label>
+<input id="file" type="file" accept="image/*" hidden>
+<div class="tf"><p>Timeframe</p><button class="t active">1M</button><button class="t">5M</button><button class="t">15M</button></div>
+<button class="analyze" onclick="analyze()">🔍 ANALYZE CANDLE</button>
+<p class="note">⚠️ This demo does not guarantee future candle movement or profit.</p>
+</section>
+<section id="result" class="card result" style="display:none">
+<small>AI RESULT</small><div id="signal" class="signal">WAIT</div>
+<div style="display:flex;justify-content:space-between"><span>Confidence</span><b id="conf">--%</b></div>
+<div class="bar"><i id="bar"></i></div>
+<div class="grid"><div><small>Trend</small><b id="trend">--</b></div><div><small>Pattern</small><b id="pattern">--</b></div><div><small>Momentum</small><b id="mom">--</b></div><div><small>Market</small><b id="market">--</b></div></div>
+<div class="card" style="margin-top:15px;text-align:left"><b>AI Analysis</b><p id="txt" style="color:#8994a5;line-height:1.5">--</p></div>
+</section>
+<section class="card"><b>📱 Candle AI Android</b><p style="color:#8994a5">Android 15 compatible app shell.</p></section>
+</div>
+<script>
+let tf="1M";
+document.querySelectorAll(".t").forEach(b=>b.onclick=()=>{document.querySelectorAll(".t").forEach(x=>x.classList.remove("active"));b.classList.add("active");tf=b.innerText});
+document.getElementById("file").onchange=e=>{
+ let f=e.target.files[0];if(!f)return;
+ let r=new FileReader();r.onload=x=>{preview.src=x.target.result;preview.style.display="block";u.style.display="none"};r.readAsDataURL(f)
+};
+function analyze(){
+ if(!document.getElementById("file").files.length){alert("Please upload a candle screenshot first.");return}
+ let data=[
+ ["UP",78,"Bullish","Hammer","Strong","Trending","Bullish momentum detected; confirmation from the next candle would be important."],
+ ["DOWN",76,"Bearish","Shooting Star","Strong","Trending","Bearish pressure detected; confirmation is recommended before any decision."],
+ ["WAIT",64,"Sideways","Doji","Weak","Ranging","The market appears indecisive. Waiting for clearer confirmation may be preferable."]
+ ][Math.floor(Math.random()*3)];
+ signal.innerText=data[0];signal.className="signal "+data[0].toLowerCase();conf.innerText=data[1]+"%";bar.style.width=data[1]+"%";
+ trend.innerText=data[2];pattern.innerText=data[3];mom.innerText=data[4];market.innerText=data[5];txt.innerText=data[6];
+ result.style.display="block";result.scrollIntoView({behavior:"smooth"});
+}
+</script>
+</body></html>
